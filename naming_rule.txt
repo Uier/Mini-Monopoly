@@ -1,0 +1,15 @@
+Naming Rule:
+
+我的程式碼大致分以下規則
+
+Variable:
+- 常數皆大寫
+    e.g. NAME, PRICE
+- 底線連接
+    e.g. number_of_units_of_owner, UNIT_FINE
+
+Function:
+- 小駝峰
+    e.g. isJail(), travelFine()
+- 取值賦值用 get & set
+    e.g. getName(), getPrice()

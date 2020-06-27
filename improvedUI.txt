@@ -1,0 +1,28 @@
+Original UI is:
+
+
+=0123=  [0]       USA     B$ 4000       =    =  [9]   Russian     B$ 3000
+=    =  [1]    Norway     B$ 3000       =    =  [8]    Brazil     B$ 1500
+=    =  [2]   Denmark     B$ 4000       =    =  [7]    Taiwan     B$ 2000
+=    =  [3]   Germany     B$ 2000       =    =  [6]     China     B$ 1000
+=    =  [4]    Poland     B$ 8000       =    =  [5]     Spain     B$ 6000
+
+
+
+IMPROVED UI is: (TzuWei's proposal)
+
+
+=user=  [ ]  Location  STATUS  PRICE   UNIT   LEVEL    =user=  [ ]  Location  STATUS  PRICE   UNIT   LEVEL
+
+=0123=  [0]       USA       B  $ 4000  $ 200  L1       =    =  [9]   Russian       B  $ 3000  $ 100  L1
+
+=    =  [1]    Norway       B  $ 3000  $ 300  L1       =    =  [8]    Brazil       B  $ 1500  $ 100  L1
+
+=    =  [2]   Denmark       B  $ 4000  $ 600  L1       =    =  [7]    Taiwan       B  $ 2000  $ 100  L1
+
+=    =  [3]   Germany       B  $ 2000  $ 100  L1       =    =  [6]     China       B  $ 1000  $ 100  L1
+
+=    =  [4]    Poland       B  $ 8000  $ 200  L1       =    =  [5]     Spain       B  $ 6000  $ 100  L1
+
+
+Moreover, we can paint words with several colors.
