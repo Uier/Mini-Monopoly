@@ -11,5 +11,5 @@ Variable:
 Function:
 - 小駝峰
     e.g. isJail(), travelFine()
-- 取值賦值用 get & set
-    e.g. getName(), getPrice()
+- 取變數值用 get 並將底線轉駝峰
+    e.g. getName(), getPrice(), getUpgradePrice

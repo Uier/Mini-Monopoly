@@ -26,3 +26,5 @@ IMPROVED UI is: (TzuWei's proposal)
 
 
 Moreover, we can paint words with several colors.
+
+UPDATE: there's no display of DICE result in original UI, which is important in my opinion.
