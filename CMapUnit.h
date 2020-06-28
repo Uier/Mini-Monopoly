@@ -23,12 +23,11 @@ public:
 		NAME(name),
 		PRICE(price) {}
 
-	bool isJail() { return (TYPE == 'J'); }
-	bool isOwner(const int &player) { return (owner == player); }
-	bool buyable() { return (!isJail() && owner == NULL); }
+	bool isJail() const { return (TYPE == 'J'); }
+	bool isOwner(const int &player) const { return (owner == player); }
+	bool buyable() const { return (!isJail() && owner == NULL); }
 	virtual void buy(const int &player) { owner = player; }
-	virtual int travelFine();
-	virtual bool upgradable() { return false; }
+	virtual bool upgradable() const { return false; }
 	virtual void release() { owner = NULL; }
 
 protected:
@@ -55,8 +54,8 @@ public:
 
 	~UpgradableUnit() { delete[] FINE_OF_LEVEL; }
 
-	const int & getUpgradePrice() { return UPGRADE_PRICE; }
-	virtual const int & travelFine() const {
+	const int & getUpgradePrice() const { return UPGRADE_PRICE; }
+	const int & travelFine() const {
 		assert(0 <= level < MAX_LEVEL);
 		return FINE_OF_LEVEL[level];
 	}
@@ -92,7 +91,7 @@ public:
 		owner = player;
 		number_of_units_of_owner[owner] += 1;
 	}
-	virtual int travelFine() {
+	const int & travelFine() const {
 		assert(0 <= owner < MAX_Player);
 		return number_of_units_of_owner[owner] * UNIT_FINE;
 	}
@@ -118,7 +117,7 @@ public:
 	) : MapUnit('R', id, name, price),
 		UNIT_FINE(unit_fine) {}
 
-	virtual int travelFine() { return randint(1, 6) * UNIT_FINE; }
+	const int & travelFine() const { return randint(1, 6) * UNIT_FINE; }
 
 private:
 	const int UNIT_FINE;
