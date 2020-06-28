@@ -10,11 +10,11 @@ class MapUnit {
 public:
 	/*
 		TODO:
-			- Buy Method (change owner)
+			- Show Info ?
 	*/
 
 	MapUnit(
-		const char &type
+		const char &type,
 		const int &id,
 		const std::string &name,
 		const int &price = -1
@@ -23,23 +23,19 @@ public:
 		NAME(name),
 		PRICE(price) {}
 
-	/*
-		TODO: 
-			- move some data to protected
-	*/
-	const char TYPE;
-	const int ID, PRICE;
-	const std::string NAME;
-	int owner = NULL;
-
 	bool isJail() { return (TYPE == 'J'); }
 	bool isOwner(const int &player) { return (owner == player); }
 	bool buyable() { return (!isJail() && owner == NULL); }
+	virtual void buy(const int &player) { owner = player; }
 	virtual int travelFine();
 	virtual bool upgradable() { return false; }
 	virtual void release() { owner = NULL; }
 
-private:
+protected:
+	const char TYPE;
+	const int ID, PRICE;
+	const std::string NAME;
+	int owner = NULL;
 
 };
 
@@ -92,9 +88,17 @@ public:
 
 	static int number_of_units_of_owner[MAX_Player];
 
+	virtual void buy(const int &player) {
+		owner = player;
+		number_of_units_of_owner[owner] += 1;
+	}
 	virtual int travelFine() {
 		assert(0 <= owner < MAX_Player);
 		return number_of_units_of_owner[owner] * UNIT_FINE;
+	}
+	virtual void release() {
+		number_of_units_of_owner[owner] -= 1;
+		owner = NULL;
 	}
 
 private:
@@ -131,8 +135,8 @@ public:
 		const int &price,
 	) : MapUnit('J', id, name, price) {}
 
-	void addPlayer(int player) { player_in_jail.insert(player); }
-	void removePlayer(int player) { player_in_jail.erase(player); }
+	void addPlayer(const int &player) { player_in_jail.insert(player); }
+	void removePlayer(const int &player) { player_in_jail.erase(player); }
 
 private:
 	set<int> player_in_jail;
