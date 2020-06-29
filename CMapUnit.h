@@ -27,8 +27,14 @@ public:
 	bool isOwner(const int &player) const { return (owner == player); }
 	bool buyable() const { return (!isJail() && owner == NULL); }
 	virtual void buy(const int &player) { owner = player; }
+	virtual const int & travelFine() const;
 	virtual bool upgradable() const { return false; }
+	virtual void upgrade();
 	virtual void release() { owner = NULL; }
+	virtual void addPlayer();
+	virtual void removePlayer();
+	virtual const int & getUpgradePrice() const;
+	virtual const int & getLevel() const;
 
 protected:
 	const char TYPE;
@@ -54,13 +60,14 @@ public:
 
 	~UpgradableUnit() { delete[] FINE_OF_LEVEL; }
 
-	const int & getUpgradePrice() const { return UPGRADE_PRICE; }
-	const int & travelFine() const {
+	virtual const int & getUpgradePrice() const { return UPGRADE_PRICE; }
+	virtual const int & getLevel() const { return level; }
+	virtual const int & travelFine() const {
 		assert(0 <= level < MAX_LEVEL);
 		return FINE_OF_LEVEL[level];
 	}
 	virtual bool upgradable() const { return (level+1 < MAX_LEVEL); }
-	void upgrade() { level += 1; }
+	virtual void upgrade() { level += 1; }
 	virtual void release() {
 		owner = NULL;
 		level = 0;
@@ -91,7 +98,7 @@ public:
 		owner = player;
 		number_of_units_of_owner[owner] += 1;
 	}
-	const int & travelFine() const {
+	virtual const int & travelFine() const {
 		assert(0 <= owner < MAX_Player);
 		return number_of_units_of_owner[owner] * UNIT_FINE;
 	}
@@ -117,7 +124,7 @@ public:
 	) : MapUnit('R', id, name, price),
 		UNIT_FINE(unit_fine) {}
 
-	const int & travelFine() const { return randint(1, 6) * UNIT_FINE; }
+	virtual const int & travelFine() const { return randint(1, 6) * UNIT_FINE; }
 
 private:
 	const int UNIT_FINE;
@@ -134,8 +141,8 @@ public:
 		const int &price,
 	) : MapUnit('J', id, name, price) {}
 
-	void addPlayer(const int &player) { player_in_jail.insert(player); }
-	void removePlayer(const int &player) { player_in_jail.erase(player); }
+	virtual void addPlayer(const int &player) { player_in_jail.insert(player); }
+	virtual void removePlayer(const int &player) { player_in_jail.erase(player); }
 
 private:
 	set<int> player_in_jail;
