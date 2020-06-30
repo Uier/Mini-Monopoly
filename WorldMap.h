@@ -52,7 +52,7 @@ public:
 		}
 	}
 	
-	MapUnit getUnit(int offset) const {
+	MapUnit & getUnit(int offset) const {
 		int index = offset % worldMap.size();
 		return *worldMap[index];
 	}

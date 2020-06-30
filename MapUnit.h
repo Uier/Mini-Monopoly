@@ -30,8 +30,8 @@ public:
 	virtual int travelFine() const;
 	virtual bool upgradable() const { return false; }
 	virtual void release() { owner = NULL; }
-	void addPlayer();
-	void removePlayer();
+	int getPrice() { return PRICE; }
+	std::string getName() { return NAME; }
 
 protected:
 	const char TYPE;
@@ -137,6 +137,7 @@ public:
 		const std::string &name,
 		const int &price,
 	) : MapUnit('J', id, name, price) {}
+
 
 	void addPlayer(int player) { player_in_jail.insert(player); }
 	void removePlayer(int player) { player_in_jail.erase(player); }
