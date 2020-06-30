@@ -37,13 +37,10 @@ void Player::setInJail(bool status) {
 	inJail = status;
 }
 
-void Player::increaseUnitCount(int amount) {
-	unitCount += amount;
-}
-
 void Player::buyUnit(int price, int id) {
 	boughtUnits.push_back(id);
 	money -= price;
+	unitCount++;
 }
 
 const std::vector<int> &Player::getBoughtUnits() const {

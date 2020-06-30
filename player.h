@@ -37,7 +37,6 @@ public:
 	void move(int steps);
 	void buyUnit(int price, int id);
 	void increaseMoney(int amount);
-	void increaseUnitCount(int amount = 1);
 	void setInJail(bool status);
 };
 
