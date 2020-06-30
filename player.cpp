@@ -28,3 +28,15 @@ void Player::move(int steps) {
 void Player::increaseMoney(int amount) {
 	money += amount;
 }
+
+bool Player::isInJail() const {
+	return inJail;
+}
+
+void Player::setInJail(bool status) {
+	inJail = status;
+}
+
+void Player::increaseUnitCount(int amount) {
+	unitCount += amount;
+}

@@ -16,6 +16,7 @@ private:
 	int offset = 0;
 	int unitCount = 0;
 	int money = defaultMoney;
+	bool inJail = false;
 
 	constexpr static int defaultMoney = 30000;
 
@@ -28,9 +29,12 @@ public:
 	[[nodiscard]] int getOffset() const;
 	[[nodiscard]] int getMoney() const;
 	[[nodiscard]] int getUnitCount() const;
+	[[nodiscard]] bool isInJail() const;
 
 	void move(int steps);
 	void increaseMoney(int amount);
+	void increaseUnitCount(int amount = 1);
+	void setInJail(bool status);
 };
 
 #endif //MINI_MONOPOLY_PLAYER_H
