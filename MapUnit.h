@@ -1,9 +1,8 @@
+#ifndef MAPUNIT__
+#define MAPUNIT__
+
 #include "util.h"
 #include <set>
-#include <assert.h>
-
-constexpr int MAX_LEVEL = 5;
-constexpr int MAX_PLAYER = 4;
 
 class MapUnit {
 
@@ -23,21 +22,23 @@ public:
 		NAME(name),
 		PRICE(price) {}
 
-	bool isJail() const { return (TYPE == 'J'); }
-	bool isOwner(int player) const { return (owner == player); }
-	bool buyable() const { return (!isJail() && owner == NULL); }
-	virtual void buy(int player) { owner = player; }
+	bool isJail() const;
+	bool isOwner(int player) const;
+	bool buyable() const;
+	virtual void buy(int player);
 	virtual int travelFine() const;
-	virtual bool upgradable() const { return false; }
-	virtual void release() { owner = NULL; }
-	int getPrice() { return PRICE; }
-	std::string getName() { return NAME; }
+	virtual bool upgradable() const;
+	virtual void release();
+	int getPrice();
+	std::string getName();
+	int getOwner();
 
 protected:
+	constexpr static int NOBODY = -1;
 	const char TYPE;
 	const int ID, PRICE;
 	const std::string NAME;
-	int owner = NULL;
+	int owner = NOBODY;
 
 };
 
@@ -57,55 +58,42 @@ public:
 
 	~UpgradableUnit() { delete[] FINE_OF_LEVEL; }
 
-	int getUpgradePrice() const { return UPGRADE_PRICE; }
-	int getLevel() const { return level; }
-	virtual int travelFine() const {
-		assert(0 <= level < MAX_LEVEL);
-		return FINE_OF_LEVEL[level];
-	}
-	virtual bool upgradable() const { return (level+1 < MAX_LEVEL); }
-	void upgrade() { level += 1; }
-	virtual void release() {
-		owner = NULL;
-		level = 0;
-	}
+	int getUpgradePrice() const;
+	int getLevel() const;
+	virtual int travelFine() const;
+	virtual bool upgradable() const;
+	void upgrade();
+	virtual void release();
 
 private:
+	constexpr static int MAX_LEVEL = 5;
 	const int UPGRADE_PRICE;
 	const int *FINE_OF_LEVEL;
-	int level = 0;
+	int level = 1;
 
 };
 
 
 class CollectableUnit : public MapUnit {
+
+private:
+	constexpr static int MAX_PLAYER = 4;
+	const int UNIT_FINE;
 	
 public:
 	CollectableUnit(
 		const int &id, 
 		const std::string &name,
 		const int &price,
-		const int &unit_fine,
+		const int &unit_fine
 	) : MapUnit('C', id, name, price),
 		UNIT_FINE(unit_fine) {}
 
 	static int number_of_units_of_owner[MAX_PLAYER];
 
-	virtual void buy(int player) {
-		owner = player;
-		number_of_units_of_owner[owner] += 1;
-	}
-	virtual int travelFine() const {
-		assert(0 <= owner < MAX_PLAYER);
-		return number_of_units_of_owner[owner] * UNIT_FINE;
-	}
-	virtual void release() {
-		number_of_units_of_owner[owner] -= 1;
-		owner = NULL;
-	}
-
-private:
-	const int UNIT_FINE;
+	virtual void buy(int player);
+	virtual int travelFine() const;
+	virtual void release();
 
 };
 
@@ -117,11 +105,11 @@ public:
 		const int &id, 
 		const std::string &name,
 		const int &price,
-		const int &unit_fine,
+		const int &unit_fine
 	) : MapUnit('R', id, name, price),
 		UNIT_FINE(unit_fine) {}
 
-	virtual int travelFine() const { return randint(1, 6) * UNIT_FINE; }
+	virtual int travelFine() const;
 
 private:
 	const int UNIT_FINE;
@@ -135,15 +123,16 @@ public:
 	JailUnit(
 		const int &id, 
 		const std::string &name,
-		const int &price,
+		const int &price
 	) : MapUnit('J', id, name, price) {}
 
-
-	void addPlayer(int player) { player_in_jail.insert(player); }
-	void removePlayer(int player) { player_in_jail.erase(player); }
+	void addPlayer(int player);
+	void removePlayer(int player);
 
 private:
-	set<int> player_in_jail;
+	std::set<int> player_in_jail;
 
 };
 
+
+#endif
