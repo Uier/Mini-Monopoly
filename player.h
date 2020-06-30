@@ -7,6 +7,7 @@
 
 #include <string>
 #include <utility>
+#include <vector>
 
 class Player {
 
@@ -17,6 +18,7 @@ private:
 	int unitCount = 0;
 	int money = defaultMoney;
 	bool inJail = false;
+	std::vector<int> boughtUnits;
 
 	constexpr static int defaultMoney = 30000;
 
@@ -30,8 +32,10 @@ public:
 	[[nodiscard]] int getMoney() const;
 	[[nodiscard]] int getUnitCount() const;
 	[[nodiscard]] bool isInJail() const;
+	[[nodiscard]] const std::vector<int>& getBoughtUnits() const;
 
 	void move(int steps);
+	void buyUnit(int price, int id);
 	void increaseMoney(int amount);
 	void increaseUnitCount(int amount = 1);
 	void setInJail(bool status);
