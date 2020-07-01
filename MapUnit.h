@@ -30,10 +30,10 @@ public:
 	virtual int travelFine() const;
 	virtual bool upgradable() const;
 	virtual void release();
-	int getId();
-	int getPrice();
-	std::string getName();
-	int getOwner();
+	int getId() const;
+	int getPrice() const;
+	std::string getName() const;
+	int getOwner() const;
 
 protected:
 	constexpr static int NOBODY = -1;

@@ -24,16 +24,16 @@ bool MapUnit::upgradable() const {
 void MapUnit::release() { 
 	owner = NOBODY; 
 }
-int MapUnit::getId() { 
+int MapUnit::getId() const { 
 	return ID; 
 }
-int MapUnit::getPrice() { 
+int MapUnit::getPrice() const { 
 	return PRICE; 
 }
-std::string MapUnit::getName() { 
+std::string MapUnit::getName() const { 
 	return NAME; 
 }
-int MapUnit::getOwner() { 
+int MapUnit::getOwner() const { 
 	return owner; 
 }
 
