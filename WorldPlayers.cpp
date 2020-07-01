@@ -21,7 +21,7 @@ std::string getline(const std::string & prompt, const std::string & default_valu
 	return inputs;
 }
 
-WorldPlayers::WorldPlayers(const int np): num_players(np), players(new playerList[np]), cur_player(players + np - 1) {
+WorldPlayers::WorldPlayers(const int np): num_players(np), players(new PlayerList[np]), cur_player(players) {
 	for(int i = 0; i < np; ++i) {
 		std::stringstream ss;
 		ss << "Please input player " << i << "'s name (Default: " << DEFAULT_PLAYER_NAME[i] << ")";
@@ -42,9 +42,13 @@ int WorldPlayers::getNumActive() const {
 	return num_active;
 }
 
+Player & WorldPlayers::current() {
+	return *cur_player->player;
+}
+
 Player & WorldPlayers::next() {
 	cur_player = cur_player->next;
-	return *cur_player->player;
+	return current();
 }
 
 Player & WorldPlayers::getById(const int id) const {

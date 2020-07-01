@@ -5,10 +5,10 @@
 
 #include "player.h"
 
-struct playerList {
+struct PlayerList {
 	Player * player;
-	playerList * next;
-	playerList * prev;
+	PlayerList * next;
+	PlayerList * prev;
 };
 
 class WorldPlayers {
@@ -18,6 +18,7 @@ public:
 
 	int getNumActive() const;
 
+	Player & current();
 	Player & next();
 	Player & getById(const int id) const;
 
@@ -26,9 +27,9 @@ private:
 	int num_active = 0;
 
 	const int num_players = 0;
-	playerList * const players = nullptr;
+	PlayerList * const players = nullptr;
 
-	playerList * cur_player = nullptr;
+	PlayerList * cur_player = nullptr;
 
 	void activate(const std::string & name);
 };
