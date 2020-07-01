@@ -14,10 +14,6 @@ bool MapUnit::buyable() const {
 void MapUnit::setOwner(int player) { 
 	owner = player; 
 }
-// travel fine 會被各個子類別 virtual 然後我不知道父類別要回傳啥 就傳 0 了 QQ
-int MapUnit::travelFine() const { 
-	return 0; 
-}
 bool MapUnit::upgradable() const { 
 	return false; 
 }
@@ -30,7 +26,7 @@ int MapUnit::getId() const {
 int MapUnit::getPrice() const { 
 	return PRICE; 
 }
-std::string MapUnit::getName() const { 
+const std::string & MapUnit::getName() const { 
 	return NAME; 
 }
 int MapUnit::getOwner() const { 
@@ -79,7 +75,9 @@ int RandomCostUnit::travelFine() const {
 	return randint(1, 6) * UNIT_FINE; 
 }
 
-
+int JailUnit::travelFine() const {
+	return 0;
+}
 void JailUnit::addPlayer(int player) { 
 	player_in_jail.insert(player); 
 }

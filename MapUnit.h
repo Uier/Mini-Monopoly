@@ -27,18 +27,18 @@ public:
 	bool isOwner(int player) const;
 	bool buyable() const;
 	virtual void setOwner(int player);
-	virtual int travelFine() const;
+	virtual int travelFine() const = 0;
 	virtual bool upgradable() const;
 	virtual void release();
 	int getId() const;
 	int getPrice() const;
-	std::string getName() const;
+	const std::string & getName() const;
 	int getOwner() const;
 
 protected:
 	constexpr static int NOBODY = -1;
-	const char TYPE;
-	const int ID, PRICE;
+	const char TYPE = 0;
+	const int ID = 0, PRICE = 0;
 	const std::string NAME;
 	int owner = NOBODY;
 
@@ -60,6 +60,7 @@ public:
 
 	~UpgradableUnit() { delete[] FINE_OF_LEVEL; }
 
+	constexpr static int MAX_LEVEL = 5;
 	int getUpgradePrice() const;
 	int getLevel() const;
 	virtual int travelFine() const;
@@ -68,19 +69,14 @@ public:
 	virtual void release();
 
 private:
-	constexpr static int MAX_LEVEL = 5;
-	const int UPGRADE_PRICE;
-	const int *FINE_OF_LEVEL;
+	const int UPGRADE_PRICE = 0;
+	const int *FINE_OF_LEVEL = nullptr;
 	int level = 1;
 
 };
 
 
 class CollectableUnit : public MapUnit {
-
-private:
-	constexpr static int MAX_PLAYER = 4;
-	const int UNIT_FINE;
 	
 public:
 	CollectableUnit(
@@ -91,11 +87,15 @@ public:
 	) : MapUnit('C', id, name, price),
 		UNIT_FINE(unit_fine) {}
 
+	constexpr static int MAX_PLAYER = 4;
 	static int number_of_units_of_owner[MAX_PLAYER];
 
 	virtual void setOwner(int player);
 	virtual int travelFine() const;
 	virtual void release();
+
+private:
+	const int UNIT_FINE = 0;
 
 };
 
@@ -114,7 +114,7 @@ public:
 	virtual int travelFine() const;
 
 private:
-	const int UNIT_FINE;
+	const int UNIT_FINE = 0;
 
 };
 
@@ -128,6 +128,7 @@ public:
 		const int &price
 	) : MapUnit('J', id, name, price) {}
 
+	virtual int travelFine() const;
 	void addPlayer(int player);
 	void removePlayer(int player);
 

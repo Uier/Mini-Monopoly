@@ -13,19 +13,18 @@ WorldMap::WorldMap(std::string filename) {
 	std::string r;
 	while ( getline(fin, r) ) {
 		std::stringstream row(r);
-		char type;	
+		char type = 0;	
+		int price = 0, upgrade_price = 0, unit_fine = 0;
 		row >> type;
 		std::string name;	
 		row >> name;
-		int price;	
 		row >> price;
 		MapUnit *generator;
 		switch ( type ) {
-			int upgrade_price, unit_fine;	
 			case 'U':
 				row >> upgrade_price;
-				int fine_of_level[5];
-				for ( int i=0; i<5; ++i )	row >> fine_of_level[i];
+				int fine_of_level[UpgradableUnit::MAX_LEVEL];
+				for ( int i=0; i<UpgradableUnit::MAX_LEVEL; ++i )	row >> fine_of_level[i];
 				generator = new UpgradableUnit(worldMap.size(), name, price, upgrade_price, fine_of_level);
 				break;
 			case 'C':
@@ -47,7 +46,7 @@ WorldMap::WorldMap(std::string filename) {
 	}
 }
 
-MapUnit & WorldMap::getUnit(int offset) const {
+MapUnit & WorldMap::getUnit(const int offset) const {
 	int index = offset % worldMap.size();
 	return *worldMap[index];
 }
