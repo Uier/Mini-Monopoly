@@ -51,7 +51,3 @@ MapUnit & WorldMap::getUnit(int offset) const {
 	int index = offset % worldMap.size();
 	return *worldMap[index];
 }
-
-int main() {
-	
-}

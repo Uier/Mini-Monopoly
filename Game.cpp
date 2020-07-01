@@ -1,7 +1,9 @@
 #include <random>
 #include <sstream>
+#include <iostream>
 
 #include "Game.h"
+#include "player.h"
 
 std::random_device rd;
 std::default_random_engine gen = std::default_random_engine(rd());
@@ -39,7 +41,7 @@ Game::State mapState(const MapUnit & map_unit, int player_id) {
 void payFine(Player & player, Player & owner, const MapUnit & map_unit) {
 	int fine = map_unit.travelFine();
 
-	std::cout << "You have to pay " << fine << " to player " << owner.getId() << " (" << owner.getName() << ")";
+	std::cout << "You have to pay " << fine << " to player " << owner.getId() << " (" << owner.getName() << ")" << std::endl;
 
 	player.increaseMoney(-fine);
 	owner.increaseMoney(fine);
@@ -100,12 +102,11 @@ void Game::start() {
 				break;
 			}
 			case CHECK_IS_IN_JAIL: {
-				state = isInJail(players.current()) ? UPDATE_UI : NEXT_PLAYER;
+				state = isInJail(players.current()) ? NEXT_PLAYER : UPDATE_UI;
 				break;
 			}
 			case UPDATE_UI: {
 				// TODO: Update UI
-				std::cout << "GAME INFO" << std::endl;
 				state = ROLL_DICE;
 				break;
 			}
@@ -151,7 +152,7 @@ void Game::start() {
 				break;
 			}
 			case TEAR_DOWN: {
-				state = players.getNumActive() > 1 ? GAME_OVER : NEXT_PLAYER;
+				state = players.getNumActive() > 1 ? NEXT_PLAYER : GAME_OVER;
 				break;
 			}
 			case NEXT_PLAYER: {
@@ -160,12 +161,11 @@ void Game::start() {
 				break;
 			}
 			case GAME_OVER: {
-				const Player & winner = players.current();
-				std::cout << "The winner is player " << winner.getId() << " (" << winner.getName() << ")!";
+				// Impossible!
 				break;
 			}
 		}
 	}
-
-	
+	const Player & winner = players.next();
+	std::cout << "The winner is player " << winner.getId() << " (" << winner.getName() << ") !" << std::endl;
 }

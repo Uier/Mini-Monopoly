@@ -17,6 +17,8 @@ int main() {
 	
 	int num_players;
 	std::cin >> num_players; num_players = std::clamp(num_players, 1, 4);
+	std::cin.clear();
+	std::cin.ignore(10000, '\n');
 
 	// Game game("map.dat");
 	Game game(num_players);

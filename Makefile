@@ -1,2 +1,2 @@
-all: main.cpp Game.cpp player.cpp WorldPlayers.cpp
+all: main.cpp Game.cpp MapUnit.cpp player.cpp util.cpp WorldMap.cpp WorldPlayers.cpp
 	g++ -std=c++17 $^

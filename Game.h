@@ -1,11 +1,6 @@
 #ifndef MINI_MONOPOLY_GAME_H
 #define MINI_MONOPOLY_GAME_H
 
-#include <iostream>
-#include <vector>
-#include <set>
-
-#include "player.h"
 #include "WorldMap.h"
 #include "WorldPlayers.h"
 
@@ -28,7 +23,8 @@ public:
 		GAME_OVER
 	};
 
-	Game(const int num_players, const std::string & map_filename = DEFAULT_MAP_FILENAME): worldMap(map_filename), players(num_players) {};
+	Game(const int num_players, const std::string & map_filename = DEFAULT_MAP_FILENAME): 
+		worldMap(map_filename), players(num_players) {};
 
 	void start();
 private:
