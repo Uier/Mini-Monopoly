@@ -1,6 +1,6 @@
 #include "MapUnit.h"
 
-#include <assert.h>
+#include <cassert>
 
 bool MapUnit::isJail() const { 
 	return (TYPE == 'J'); 
