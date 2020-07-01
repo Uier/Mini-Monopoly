@@ -36,14 +36,6 @@ int selectOptions(const std::string & prompt, const std::vector<std::string> & o
 	return selected;
 }
 
-bool isInJail(Player & player) {
-	if(player.isInJail()) {
-		player.setInJail(false);
-		return true;
-	}
-	return false;
-}
-
 MapUnit & rollDice(Player & player, const WorldMap & worldMap) {
 	player.move(dis(gen));
 	return worldMap.getUnit(player.getOffset());
