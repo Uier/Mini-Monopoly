@@ -49,7 +49,7 @@ MapUnit & rollDice(Player & player, const WorldMap & worldMap) {
 	return worldMap.getUnit(player.getOffset());
 }
 
-Game::State mapState(const MapUnit & map_unit, int player_id) {
+Game::State mapState(const MapUnit & map_unit, const int player_id) {
 	Game::State ret;
 
 	if(map_unit.isJail()) {
