@@ -11,15 +11,21 @@ bool MapUnit::isOwner(int player) const {
 bool MapUnit::buyable() const { 
 	return ( !isJail() && owner == NOBODY ); 
 }
-void MapUnit::buy(int player) { 
+void MapUnit::setOwner(int player) { 
 	owner = player; 
 }
-int MapUnit::travelFine() const {}
+// travel fine 會被各個子類別 virtual 然後我不知道父類別要回傳啥 就傳 0 了 QQ
+int MapUnit::travelFine() const { 
+	return 0; 
+}
 bool MapUnit::upgradable() const { 
 	return false; 
 }
 void MapUnit::release() { 
 	owner = NOBODY; 
+}
+int MapUnit::getId() { 
+	return ID; 
 }
 int MapUnit::getPrice() { 
 	return PRICE; 
@@ -49,13 +55,13 @@ void UpgradableUnit::upgrade() {
 	level += 1; 
 }
 void UpgradableUnit::release() {
-	owner = NULL;
+	owner = NOBODY;
 	level = 1;
 }
 
 
 int CollectableUnit::number_of_units_of_owner[MAX_PLAYER];
-void CollectableUnit::buy(int player) {
+void CollectableUnit::setOwner(int player) {
 	owner = player;
 	number_of_units_of_owner[owner] += 1;
 }

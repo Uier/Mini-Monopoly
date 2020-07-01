@@ -3,6 +3,7 @@
 
 #include "util.h"
 #include <set>
+#include <string>
 
 class MapUnit {
 
@@ -25,10 +26,11 @@ public:
 	bool isJail() const;
 	bool isOwner(int player) const;
 	bool buyable() const;
-	virtual void buy(int player);
+	virtual void setOwner(int player);
 	virtual int travelFine() const;
 	virtual bool upgradable() const;
 	virtual void release();
+	int getId();
 	int getPrice();
 	std::string getName();
 	int getOwner();
@@ -91,7 +93,7 @@ public:
 
 	static int number_of_units_of_owner[MAX_PLAYER];
 
-	virtual void buy(int player);
+	virtual void setOwner(int player);
 	virtual int travelFine() const;
 	virtual void release();
 
