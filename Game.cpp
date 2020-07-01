@@ -129,7 +129,8 @@ void Game::start() {
 				break;
 			}
 			case CHECK_IS_IN_JAIL: {
-				state = isInJail(players.current()) ? NEXT_PLAYER : UPDATE_UI;
+				Player & player = players.current();
+				state = player.isInJail() ? (player.setInJail(false), NEXT_PLAYER) : UPDATE_UI;
 				break;
 			}
 			case UPDATE_UI: {
