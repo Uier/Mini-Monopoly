@@ -1,6 +1,8 @@
 #include <random>
 #include <sstream>
 #include <iostream>
+#include <vector>
+#include <string>
 
 #include "Game.h"
 #include "player.h"
@@ -8,6 +10,31 @@
 std::random_device rd;
 std::default_random_engine gen = std::default_random_engine(rd());
 std::uniform_int_distribution<int> dis(1, 6);
+
+int selectOptions(const std::string & prompt, const std::vector<std::string> & options) {
+	std::cout << prompt << "(";
+	if(options.empty()) {
+		return 0;
+	} else {
+		std::cout << "1: " << options[0] << " [default]";
+	}
+	for(int i = 1; i < options.size(); ++i) {
+		std::cout << " / " << i + 1 << ": " << options[i];
+	}
+	std::cout << ") ...> ";
+	std::string inputs;
+	std::getline(std::cin, inputs);
+	std::istringstream iss(inputs);
+
+	int selected = 0;
+	iss >> selected;
+
+	if(selected < 1 || selected > options.size()) {
+		selected = 1;
+	}
+
+	return selected;
+}
 
 bool isInJail(Player & player) {
 	if(player.isInJail()) {
@@ -53,10 +80,10 @@ void buyUnit(Player & player, MapUnit & map_unit) {
 		return;
 	}
 
-	std::cout << player.getName() << ", do you want to buy " << map_unit.getName() << "? (1: Yes [default] / 2: No) ...> ";
+	std::stringstream ss;
+	ss << player.getName() << ", do you want to buy " << map_unit.getName() << "?";
 
-	int select;
-	std::cin >> select;
+	int select = selectOptions(ss.str(), {"Yes", "No"});
 	if(select == 2) {
 		return;
 	}
@@ -75,10 +102,10 @@ void upgradeUnit(Player & player, UpgradableUnit & map_unit) {
 		return;
 	}
 
-	std::cout << player.getName() << ", do you want to upgrade " << map_unit.getName() << "? (1: Yes [default] / 2: No) ...> ";
+	std::stringstream ss;
+	ss << player.getName() << ", do you want to upgrade " << map_unit.getName() << "?";
 
-	int select;
-	std::cin >> select;
+	int select = selectOptions(ss.str(), {"Yes", "No"});
 	if(select == 2) {
 		return;
 	}
